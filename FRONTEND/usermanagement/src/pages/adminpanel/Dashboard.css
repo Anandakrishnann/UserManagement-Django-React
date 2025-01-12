@@ -70,6 +70,7 @@
 
   .content-header h1{
     color: white;
+    font-size: 2.5rem;
   }
   
   .header-actions {
@@ -107,7 +108,7 @@
   }
   
   .add-user-btn:hover {
-    background-color: #c6bebe;
+    background-color: #ffffff;
   }
   
   /* Table */
