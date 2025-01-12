@@ -1,0 +1,62 @@
+/* Center the content on the page */
+.not-found-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+    background: #ffffff; /* Black background */
+    color: #000000; /* White text */
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Big, bold title for 404 */
+  .not-found-title {
+    font-size: 8rem;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    margin: 0;
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  /* Smaller text for "Page Not Found" */
+  .not-found-text {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+    animation: fadeIn 3s ease-in-out;
+  }
+  
+  /* Button for navigation */
+  .not-found-button {
+    text-decoration: none;
+    padding: 10px 20px;
+    margin-top: 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #000;
+    background-color: #fff;
+    border: 2px solid #fff;
+    border-radius: 4px;
+    transition: all 0.3s ease-in-out;
+    animation: fadeIn 2s ease-in-out;
+  }
+  
+  /* Button hover effect */
+  .not-found-button:hover {
+    color: #000000;
+    background-color: #ffffff;
+    border-color: #000000;
+    transform: scale(1.1);
+  }
+  
+  /* Fade-in animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  

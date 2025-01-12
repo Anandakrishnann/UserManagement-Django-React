@@ -1,0 +1,558 @@
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  .sidebar {
+    margin: 0;
+    width: 300px;
+    background-color: #1a1a1a;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    position: fixed; /* Fix the sidebar to the left of the screen */
+    height: 96vh; /* Set the sidebar height to 100vh */
+    overflow-y: auto; /* Add scrollbar only for the content inside the sidebar */
+  }
+  
+  .sidebar-header {
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #333;
+  }
+  
+  .sidebar-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+  
+  .sidebar-nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.5rem 0;
+  }
+  
+  .nav-item {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    color: white;
+    background: none;
+    border: none;
+    border-radius: 6px;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .nav-item:hover {
+    background-color: #333;
+  }
+  
+  .nav-item.active {
+    background-color: #2d2d2d;
+  }
+
+
+  
+  .content-header {
+    margin-left: 348px;
+    display: flex;
+    justify-content: space-between;
+    width: 1170px;
+    align-items: center;
+    position: fixed;
+    margin-bottom: 2rem;
+    background-color:  #1a1a1a;
+    color: white;
+  }
+
+  .content-header h1{
+    color: white;
+  }
+  
+  .header-actions {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .status-active.active {
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    font-size: 1rem;
+    background-color: rgb(16, 187, 16);
+  }
+  
+  .status-active.inactive {
+    background-color: rgb(255, 0, 0);
+    font-weight: bold;
+    color: white;
+  }
+  
+  .search-input {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 300px;
+  }
+  
+  .add-user-btn {
+    padding: 0.5rem 1rem;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .add-user-btn:hover {
+    background-color: #c6bebe;
+  }
+  
+  /* Table */
+  .users-table-container {
+    margin-left: 350px;
+    margin-top: 110px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .users-table {
+    width: 1100px;
+    border-collapse: collapse;
+    margin-left: 20px; /* Remove margin */
+}
+  
+  .users-table th,
+  .users-table td {
+    padding: 1rem;
+    padding-left: 72px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .users-table th {
+    background-color: #f8f8f8;
+    font-weight: 600;
+  }
+  
+  .status-active {
+    background-color: #e6f4ea;
+    color: #1e7e34;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.875rem;
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .edit-btn,
+  .delete-btn {
+    padding: 0.25rem 0.75rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .restore-btn {
+    padding: 0.25rem 0.75rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+
+
+  
+  .edit-btn {
+    background-color: #f8f9fa;
+    color: #333;
+    border: 1px solid #ddd;
+  }
+  
+  .delete-btn {
+    background-color: #dc3545;
+    color: white;
+  }
+
+  .restore-btn {
+    background-color: #0051ff;
+    color: white;
+  }
+
+  .restore-btn {
+    background-color: #0044ff;
+    color: white;
+  }
+  
+  .logout-button {
+    padding: 0.75rem 1rem;
+    background-color: transparent;
+    color: white;
+    border: 1px solid #333;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+  }
+  
+  .logout-button:hover {
+    background-color: #333;
+  }
+  .action-buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .edit-btn,
+  .delete-btn {
+    padding: 0.5rem 0.75rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .restore-btn {
+    padding: 0.5rem 0.75rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .edit-btn {
+    background-color: #000dff; /* Vibrant teal */
+    color: white;
+  }
+  
+  .delete-btn {
+    background-color: #dc3545; /* Vibrant red */
+    color: white;
+  }
+
+  .restore-btn {
+    background-color: #0011ff; /* Vibrant red */
+    color: white;
+  }
+  
+  .edit-btn:hover {
+    background-color: #5660ec; /* Darker teal */
+    transform: scale(1.05);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .delete-btn:hover {
+    background-color: #c82333; /* Darker red */
+    transform: scale(1.05);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .restore-btn:hover {
+    background-color: #233ec8; /* Darker red */
+    transform: scale(1.05);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+/* Modal overlay styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);  /* Slightly darker for a more sophisticated look */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal container styling */
+.modal-container {
+  background: #fff;
+  width: 450px; /* Increased width for more content space */
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Soft, wide shadow */
+  animation: fadeIn 0.3s ease-in-out;
+  padding: 30px;
+  position: relative;
+  overflow: hidden; /* Prevents overflow issues */
+}
+
+/* Modal header */
+.modal-header {
+  padding: 15px 20px;
+  /* A rich blue color for the header */
+  color: #000000;
+  font-size: 40px;
+  font-weight: 600;
+  text-align: center;
+
+  letter-spacing: 1px;
+}
+
+/* Modal content */
+.modal-content {
+  padding: 20px 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+.modal-content label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;  /* Darker color for better readability */
+}
+
+.modal-content input {
+  width: 95%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #333;
+  background: #f8f9fa;  /* Light background for inputs */
+  transition: border-color 0.3s ease-in-out;
+
+  /* Focus effect */
+  outline: none;
+}
+
+.modal-content input:focus {
+  border-color: #000000;  /* Highlight inputs on focus */
+}
+
+/* Modal actions (buttons) */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 20px;
+}
+
+.modal-actions button {
+  padding: 10px 20px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Save button */
+.modal-actions .save-btn {
+  background: #28a745;
+  color: #fff;
+}
+
+.modal-actions .save-btn:hover {
+  background: #218838;
+  transform: scale(1.05);  /* Subtle hover effect */
+}
+
+/* Cancel button */
+.modal-actions .cancel-btn {
+  background: #dc3545;
+  color: #fff;
+}
+
+.modal-actions .cancel-btn:hover {
+  background: #c82333;
+  transform: scale(1.05);  /* Subtle hover effect */
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.custom-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.custom-modal-container {
+  background: #fff;
+  width: 400px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  animation: slide-down 0.3s ease-out;
+}
+
+.custom-modal-header {
+  color: rgb(0, 0, 0);
+  padding: 12px 16px;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.custom-modal-body {
+  padding: 16px;
+}
+
+.custom-input {
+  width: 100%;
+  padding: 8px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.custom-checkbox {
+  margin-top: 8px;
+}
+.custom-checkbox {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #007bff;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.custom-checkbox:checked {
+  background-color: #007bff;
+  border-color: #0056b3;
+  position: relative;
+}
+
+.custom-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  width: 6px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
+.custom-checkbox:hover {
+  border-color: #0056b3;
+}
+
+.custom-checkbox:focus {
+  box-shadow: 0 0 2px 2px rgba(0, 123, 255, 0.5);
+}
+/*  */
+.checkbox {
+  margin-top: 8px;
+}
+.checkbox {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #007bff;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.checkbox:checked {
+  background-color: #007bff;
+  border-color: #0056b3;
+  position: relative;
+}
+
+.checkbox:checked::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  width: 6px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
+.checkbox:hover {
+  border-color: #0056b3;
+}
+
+.checkbox:focus {
+  box-shadow: 0 0 2px 2px rgba(0, 123, 255, 0.5);
+}
+
+
+.custom-modal-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  background: #f1f1f1;
+}
+
+.custom-cancel-btn,
+.custom-save-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.custom-cancel-btn {
+  background: #d9534f;
+  color: white;
+}
+
+.custom-save-btn {
+  background: #5cb85c;
+  color: white;
+}
+
+.custom-cancel-btn:hover {
+  background: #c9302c;
+}
+
+.custom-save-btn:hover {
+  background: #449d44;
+}
+
+@keyframes slide-down {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

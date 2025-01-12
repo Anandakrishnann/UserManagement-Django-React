@@ -1,0 +1,123 @@
+body{
+  margin: 0;
+}
+.signup-container {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  align-items: center;
+  height: 100vh;
+  background: url('') no-repeat center center/cover;
+  background-color: rgb(255, 252, 252);
+  position: relative;
+}
+
+.signup-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.6); /* Semi-transparent overlay */
+  z-index: 1;
+}
+
+.signup-form {
+  background-color: rgba(255, 255, 255, 0.9); /* Slight transparency */
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
+  width: 420px;
+  z-index: 2;
+  position: relative;
+  text-align: center;
+}
+
+.signup-avatar-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.signup-avatar {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333; /* Dark gray */
+}
+
+.input-container {
+  position: relative;
+  margin-bottom: 1.5rem;
+  
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 90%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+input::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+input:focus {
+  border-color: #555;
+  outline: none;
+  background-color: #fff;
+}
+
+.signup-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #333; /* Black */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.3s;
+}
+
+.signup-button:hover {
+  background-color: #555; /* Dark gray */
+}
+
+.redirect {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #000000;
+}
+
+.redirect p {
+  font-size: 14px;
+  color: #000000;
+}
+
+.redirect a {
+  color: #000000; /* White */
+  text-decoration: underline;
+  font-weight: bold;
+  margin-left: 5px;
+  transition: color 0.3s;
+}
+
+.redirect a:hover {
+  color: #ccc; /* Light gray */
+}
+
+.error {
+  color: red;
+  font-size: 0.8em;
+  margin-top: 5px;
+  text-align: left;
+}
