@@ -5,6 +5,7 @@ import { setAuthData } from '../../redux/auth/authSlice.jsx';
 import './Login.css';
 import axiosInstance from '../../axiosconfig.js';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '../../constants.js';
+import { loginUser } from '../../redux/thunks/authThunks';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -16,45 +17,7 @@ const Login = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        try {
-            const response = await axiosInstance.post('/api/login/', { email, password });
-
-            const data = response.data
-            console.log(data.user.is_admin);
-            console.log(data);
-            
-            
-            
-            localStorage.setItem(ACCESS_TOKEN, data.access);
-            localStorage.setItem(REFRESH_TOKEN, data.refresh);
-
-            const isAuthenticated = true
-            const isAdmin = data.user.is_admin
-            
-            dispatch(setAuthData({
-                user: data.user,
-                token: data.access,
-                isAuthenticated: isAuthenticated,
-                isAdmin: isAdmin,
-            }));
-            console.log("is admin true",data.user.is_admin);
-
-            if (isAdmin) {
-                setTimeout(() => navigate('/dashboard'), 100);
-                toast.success("Welcome to Dashboard")
-            } else {
-                toast.success("Welcome Successfully Logged in")
-                setTimeout(() => navigate('/home'), 100);
-            }
-            
-
-        } catch (error) {
-            if (error.response && error.response.data) {
-                toast.error(error.response.data.error || 'Invalid credentials');
-            } else {
-                toast.error('An error occurred during login');
-            }
-        }
+        dispatch(loginUser(email, password, navigate));
     }
 
     return (

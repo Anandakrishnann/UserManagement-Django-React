@@ -30,61 +30,81 @@ const Signup = () => {
 
     if (!formData.email.trim()) {
       tempErrors.email = "Email is required";
+      toast.error("Email is required")
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       tempErrors.email = "Email is invalid";
+      toast.error("Email is invalid")
     }
 
     if (!formData.username.trim()) {
       tempErrors.username = "Username is required";
+      toast.error("Username is required")
     } else if (!/^[a-zA-Z]+$/.test(formData.username)) {  
+      toast.error("Username can only contain letters (no numbers or special characters)")
     tempErrors.username = "Username can only contain letters (no numbers or special characters)";
     }
 
     if (!formData.phoneNumber.trim()) {
+      toast.error("Phone number is required")
       tempErrors.phoneNumber = "Phone number is required";
     } else if (!/^\d{10}$/.test(formData.phoneNumber)) {
       tempErrors.phoneNumber = "Phone number is invalid";
+      toast.error("Phone number is invalid")
     }
 
     if (!formData.password) {
       tempErrors.password = "Password is required";
+      toast.error("Password is required")
     } else if (formData.password.length < 8) {
       tempErrors.password = "Password must be at least 8 characters";
+      toast.error("Password must be at least 8 characters")
     } else if (!/(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9])(?=.*[a-z]).{8,}/.test(formData.password)) {
       tempErrors.password = "Password must contain at least one uppercase letter, one special character, one digit, and one lowercase letter";
+      toast.error( "Password must contain at least one uppercase letter, one special character, one digit, and one lowercase letter")
     }
 
     if (formData.password !== formData.confirmPassword) {
       tempErrors.confirmPassword = "Passwords do not match";
+      toast.error("Passwords do not match")
     }
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
   };
 
-  
-
   const handleSignup = async (e) => {
     e.preventDefault();
     if (validate()) {
       try {
-        console.log(formData.username, formData.email);
-        
         const response = await axiosInstance.post('/api/signup/', {
           username: formData.username,
           phone_number: formData.phoneNumber,
           email: formData.email,
           password: formData.password,
         });
-        // dispatch(setAuthData(response.data));
-        toast.success("Your Account Activated Succesfully Login")
+  
+        toast.success("Your Account Activated Successfully. Please Login!");
         navigate('/login');
       } catch (error) {
-        console.error('Signup failed:', error.response?.data || error.message);
-        toast.error(error.response?.data || {}); // Show errors to the user
-        console.log(errors)
+        const errorData = error.response?.data;
+        if (errorData) {
+          // Iterate over error object and display each message
+          Object.keys(errorData).forEach((key) => {
+            const messages = errorData[key];
+            if (Array.isArray(messages)) {
+              messages.forEach((msg) => {
+                toast.error(`${key}: ${msg}`);
+              });
+            } else {
+              toast.error(`${key}: ${messages}`);
+            }
+          });
+        } else {
+          toast.error("Signup failed. Please try again.");
+        }
       }
     }
   };
+  
 
   return (
     <div className='signup-container'>

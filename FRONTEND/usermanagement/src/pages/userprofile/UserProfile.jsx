@@ -14,29 +14,30 @@ const UserProfile = () => {
   const [showModal, setShowModal] = useState(false);
   const [preview, setPreview] = useState(null);
   const [uploading, setUploading] = useState(false);
-  const [image, setImage] = useState(null)
-
+  const [image, setImage] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editForm, setEditForm] = useState({ username: '', email: '', phone_number: '' });
+  const [errors, setErrors] = useState({});
   const user = useSelector((state) => state.auth.user);
+  
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await axiosInstance.get("/api/profile-picture/");
+        const response = await axiosInstance.get('/api/profile-picture/');
         if (response.data && response.data.profile_picture) {
-          setImage(response.data.profile_picture); // Set image if available
+          setImage(response.data.profile_picture);
         } else {
-          setImage(null); // No image, set it to null
+          setImage(null);
         }
       } catch (error) {
-        console.error("Error fetching profile picture:", error.message); 
-        setImage(null); // Optionally, display a default image if error occurs
+        console.error('Error fetching profile picture:', error.message);
+        setImage(null);
       }
     };
     fetchUserProfile();
   }, [image]);
-  
-  
-  
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -48,12 +49,12 @@ const UserProfile = () => {
     e.preventDefault();
     const fileInput = document.querySelector('.file-input');
     const file = fileInput?.files[0];
-  
+
     if (!file) return;
-  
+
     const formData = new FormData();
     formData.append('profile_picture', file);
-  
+
     try {
       setUploading(true);
       const response = await axiosInstance.post('/api/upload-profile-picture/', formData, {
@@ -61,14 +62,13 @@ const UserProfile = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-  
-      // Update user profile picture in Redux and localStorage
-      const updatedUser = { ...user, profile_picture: response.data.profile_picture }; // Corrected key
+
+      const updatedUser = { ...user, profile_picture: response.data.profile_picture };
       dispatch(setAuthData({ user: updatedUser, token: localStorage.getItem('token'), isAuthenticated: true, isAdmin: user.isAdmin }));
-      setImage(response.data.profile_picture); // Update image preview
+      setImage(response.data.profile_picture);
       setShowModal(false);
       setPreview(null);
-      toast.success("Image uploaded successfully")
+      toast.success('Image uploaded successfully');
     } catch (error) {
       console.error('Upload failed:', error.response?.data || error.message);
       toast.error('Failed to upload profile picture');
@@ -76,7 +76,76 @@ const UserProfile = () => {
       setUploading(false);
     }
   };
-  
+
+  const validateForm = (data) => {
+    let tempErrors = {};
+    if (!data.email.trim()) {
+      tempErrors.email = 'Email is required';
+      toast.error('Email is required')
+    } else if (!/\S+@\S+\.\S+/.test(data.email)) {
+      tempErrors.email = 'Email is invalid';
+      toast.error('Email is invalid')
+    }
+    if (!data.username.trim()) {
+      tempErrors.username = 'Username is required';
+      toast.error('Username is required')
+    } else if (!/^[a-zA-Z]+$/.test(data.username)) {
+      tempErrors.username = 'Username can only contain letters (no numbers or special characters)';
+      toast.error( 'Username can only contain letters (no numbers or special characters)')
+    }
+    if (!data.phone_number.trim()) {
+      tempErrors.phone_number = 'Phone number is required';
+      toast.error('Phone number is required')
+    } else if (!/^\d{10}$/.test(data.phone_number)) {
+      tempErrors.phone_number = 'Phone number is invalid';
+      toast.error('Phone number is invalid')
+    }
+    return tempErrors;
+  };
+
+  const handleEditToggle = () => {
+    setIsEditing(!isEditing);
+    if (!isEditing) {
+      setEditForm({
+        username: user?.username || '',
+        email: user?.email || '',
+        phone_number: user?.phone_number || '',
+      });
+      setErrors({});
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSave = async () => {
+    const validationErrors = validateForm(editForm);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    try {
+      const response = await axiosInstance.put('/api/update-profile/', editForm);
+      const updatedUser = { ...user, ...response.data.data };
+
+      dispatch(setAuthData({
+        user: updatedUser,
+        token: localStorage.getItem('token'),
+        isAuthenticated: true,
+        isAdmin: user?.isAdmin || false,
+      }));
+
+      toast.success('Profile updated successfully');
+      setIsEditing(false);
+    } catch (error) {
+      console.error('Update failed:', error.response?.data || error.message);
+      toast.error('Failed to update profile');
+    }
+  };
+
 
   const goback = () => {
     navigate('/home');
@@ -91,11 +160,11 @@ const UserProfile = () => {
         </div>
         <div className="right-section">
           <div className="actions">
-          <img
-            src={image || '/default-avatar.png'} // Default avatar if no image
-            alt="Profile"
-            className="profile-picture"
-          />
+            <img
+              src={image || '/default-avatar.png'}
+              alt="Profile"
+              className="profile-picture"
+            />
             <button onClick={() => setShowModal(true)}>Upload</button>
           </div>
           <h2 className="username">{user?.username || 'Username'}</h2>
@@ -108,11 +177,25 @@ const UserProfile = () => {
           <div className="form-grid">
             <div>
               <label>Username</label>
-              <input type="text" value={user?.username || ''} disabled />
+              <input
+                type="text"
+                name="username"
+                value={isEditing ? editForm.username : user?.username || ''}
+                onChange={handleInputChange}
+                disabled={!isEditing}
+              />
+              {errors.username && <span className="error-text">{errors.username}</span>}
             </div>
             <div>
               <label>Email address</label>
-              <input type="email" value={user?.email || ''} disabled />
+              <input
+                type="email"
+                name="email"
+                value={isEditing ? editForm.email : user?.email || ''}
+                onChange={handleInputChange}
+                disabled={!isEditing}
+              />
+              {errors.email && <span className="error-text">{errors.email}</span>}
             </div>
           </div>
         </div>
@@ -120,19 +203,37 @@ const UserProfile = () => {
           <div className="form-grid">
             <div>
               <label>Phone Number</label>
-              <input type="text" value={user?.phone_number || ''} disabled />
+              <input
+                type="text"
+                name="phone_number"
+                value={isEditing ? editForm.phone_number : user?.phone_number || ''}
+                onChange={handleInputChange}
+                disabled={!isEditing}
+              />
+              {errors.phone_number && <span className="error-text">{errors.phone_number}</span>}
             </div>
+          </div>
+          <div className="edit-actions">
+            <button onClick={handleEditToggle} className="edit-btn" style={{
+              marginRight: '10px',
+              backgroundColor: isEditing ? 'red' : 'blue',
+            }}>
+              {isEditing ? 'Cancel'  : 'Edit'}
+            </button>
+            {isEditing && (
+              <button style={{ backgroundColor: 'green'}} onClick={handleSave} className="edit-btn">Save</button>
+            )}
           </div>
         </div>
       </div>
 
-      {/* Modal for uploading image */}
-      {showModal && (
+      { showModal && (
         <div className="modal">
           <div className="modal-content">
             <h3>Upload Profile Picture</h3>
+            
             <input
-              type="file"
+              type="file" 
               accept="image/*"
               className="file-input"
               onChange={handleFileChange}

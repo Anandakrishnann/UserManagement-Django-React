@@ -18,6 +18,7 @@ from django.conf import settings
 from PIL import Image
 from io import BytesIO
 from django.core.exceptions import ObjectDoesNotExist
+from .serializers import EditUserProfileSerializer
 
 # Create your views here.
 
@@ -122,7 +123,6 @@ class EditUser(APIView):
 class CreateUser(APIView):
     def post(self, request):
         serializer = CustomUserSerializer(data=request.data)
-        print(serializer)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=201)
@@ -192,3 +192,20 @@ class UserProfilePicture(APIView):
         except Exception as e:
             print(str(e))
             return Response({'error': 'An error occurred while fetching profile picture'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+class EditUserProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request):
+        user = request.user
+        serializer = EditUserProfileSerializer(user, data=request.data, partial=True)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response({
+                'message': 'Profile updated successfully',
+                'data': serializer.data  # Use updated data here
+            }, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

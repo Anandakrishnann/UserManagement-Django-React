@@ -11,9 +11,8 @@ const AdminProtectedRoute = ({ children }) => {
     if (!isAdmin) {
       navigate('/unauthorized'); 
     }
-  }, [isAdmin]); // Include isAuthenticated in the dependency array
+  }, [isAdmin]); 
 
-  // If not authenticated, render the children components (e.g., Login/Signup)
   return children;
 };
 

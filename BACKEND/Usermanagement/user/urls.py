@@ -11,4 +11,5 @@ urlpatterns = [
     path('edit/<int:id>/', EditUser.as_view(), name='edit-user'),
     path('upload-profile-picture/', UploadProfilePictureView.as_view(), name='upload-profile-picture'),
     path('profile-picture/', UserProfilePicture.as_view(), name='profile-picture'),
+     path('update-profile/', EditUserProfileView.as_view(), name='edit-profile'),
 ]

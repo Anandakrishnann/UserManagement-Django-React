@@ -5,7 +5,7 @@ import Home from "./pages/home/Home";
 import Dashboard from "./pages/adminpanel/dashboard.jsx";
 import UserProfile from "./pages/userprofile/UserProfile.jsx";
 import ProtectedRoutes from "./components/ProtectedRoute.jsx";
-import NoteFound from "./pages/notfound/NoteFound.jsx";
+import NotFound from "./pages/notfound/NoteFound.jsx";
 import PublicRoute from "./components/PublicRoute.jsx";
 import Unauthorized from "./pages/unauthorized/Unauthorized.jsx";
 // import AdminProtectedRoute from "./components/AdminProtectedRoute.jsx";
@@ -38,7 +38,7 @@ function App() {
 
 
           {/* Catch-All Route */}
-          <Route path="*" element={<NoteFound />} />
+          <Route path="*" element={<NotFound />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
         </Routes>
       </BrowserRouter>

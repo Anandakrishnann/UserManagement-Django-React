@@ -8,6 +8,7 @@ const initialState = {
     isAdmin: JSON.parse(localStorage.getItem('user'))?.is_admin || false,
 };
 
+
 const authSlice = createSlice({
     name: 'auth',
     initialState,

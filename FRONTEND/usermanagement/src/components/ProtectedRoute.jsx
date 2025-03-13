@@ -8,8 +8,8 @@ function ProtectedRoutes({ children }) {
   const [isAuthorized, setIsAuthorized] = useState(null);
 
   useEffect(() => {
-    auth().catch(() => setIsAuthorized(false)); // Potentially causes a re-render loop
-  }, [isAuthorized]); // Dependency array ensures this runs only once
+    auth().catch(() => setIsAuthorized(false)); 
+  }, [isAuthorized]); 
 
   const refreshToken = async () => {
     const refreshToken = localStorage.getItem(REFRESH_TOKEN);
@@ -39,9 +39,9 @@ function ProtectedRoutes({ children }) {
     const now = Date.now() / 1000;
 
     if (tokenExpiration < now) {
-      await refreshToken(); // May trigger re-renders if `refreshToken` causes state updates
+      await refreshToken(); 
     } else {
-      setIsAuthorized(true); // State update
+      setIsAuthorized(true);
     }
   };
 

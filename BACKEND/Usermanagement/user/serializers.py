@@ -13,3 +13,13 @@ class CustomUserSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         return user
+    
+
+class EditUserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'email', 'phone_number']
+        extra_kwargs = {
+            'username': {'required': True},
+            'email': {'required': True},
+        }

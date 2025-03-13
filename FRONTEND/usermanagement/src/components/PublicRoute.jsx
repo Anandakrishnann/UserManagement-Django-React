@@ -10,9 +10,8 @@ const PublicRoute = ({ children }) => {
     if (isAuthenticated) {
       navigate('/home'); 
     }
-  }, [isAuthenticated]); // Include isAuthenticated in the dependency array
+  }, [isAuthenticated]); 
 
-  // If not authenticated, render the children components (e.g., Login/Signup)
   return children;
 };
 
